@@ -1,13 +1,13 @@
 ﻿using Buble.Models;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Shapes;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using Buble.Models;
+using Windows.UI.Xaml.Controls.Primitives;
 
 namespace Buble.Views
 {
@@ -23,11 +24,11 @@ namespace Buble.Views
     /// </summary>
     public partial class ScreenRecorderView : UserControl
     {
+
         public ScreenRecorderView()
         {
             InitializeComponent();
         }
-
 
         // Filing variables:
         string outputPath = "";
@@ -35,9 +36,10 @@ namespace Buble.Views
         string finalVidName = "FinalVideo.mp4";
         private bool isRecording = false;
         private bool shouldRecord = false;
+        private Rectangle _recordingBox;
 
         // Screen recorder object:
-        ScreenRecorderModel screenRec = new ScreenRecorderModel(new Rectangle(), "");
+        ScreenRecorderModel screenRec = new ScreenRecorderModel(new System.Drawing.Rectangle(), "");
 
         private void button4_Click(object sender, EventArgs e)
         {
@@ -49,12 +51,13 @@ namespace Buble.Views
             {
                 outputPath = @folderBrowser.SelectedPath;
                 pathSelected = true;
+                address_block.Text = "Address: " + @folderBrowser.SelectedPath;
 
                 //Finish screen recorder object:
                 System.Drawing.Point point = new System.Drawing.Point(100, 100);
                 System.Windows.Forms.Screen screen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)point.X, (int)point.Y));
 
-                Rectangle bounds = new Rectangle(screen.Bounds.Left, screen.Bounds.Top, screen.Bounds.Width, screen.Bounds.Height);
+                System.Drawing.Rectangle bounds = new System.Drawing.Rectangle(screen.Bounds.Left, screen.Bounds.Top, screen.Bounds.Width, screen.Bounds.Height);
                 screenRec = new ScreenRecorderModel(bounds, outputPath);
             }
             else
@@ -66,6 +69,9 @@ namespace Buble.Views
         private void button1_Click(object sender, EventArgs e)
         {
             bool containsMP4 = finalVidName.Contains(".mp4");
+            record_button = sender as Button;
+            record_button.IsEnabled = false;
+            stop_button.IsEnabled = true;
 
             if (pathSelected && containsMP4)
             {
@@ -73,7 +79,7 @@ namespace Buble.Views
                 // Set the flag to start recording
                 isRecording = true;
                 shouldRecord = true;
-
+                MyPopup.IsOpen = true;
                 // Start recording in a new thread
                 Thread recordingThread = new Thread(new ThreadStart(RecordingThread));
                 recordingThread.Start();
@@ -112,10 +118,12 @@ namespace Buble.Views
 
         private void button2_Click(object sender, EventArgs e)
         {
+            record_button.IsEnabled = true;
+            stop_button.IsEnabled = false;
+            MyPopup.IsOpen = false;
             // Set the flag to stop recording
             shouldRecord = false;
             screenRec.Stop();
-            //System.Windows.Forms.Application.Restart();
         }
 
 

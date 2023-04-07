@@ -6,10 +6,147 @@
              xmlns:local="clr-namespace:Buble.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <!--<Grid>
         <Button Content="Record" HorizontalAlignment="Left" Height="53" Margin="30,25,0,0" VerticalAlignment="Top" Width="258" Click="button1_Click" />
         <Button Content="Stop" HorizontalAlignment="Left" Height="66" Margin="30,132,0,0" VerticalAlignment="Top" Width="237" Click="button2_Click"/>
         <Button Content="Select Folder" HorizontalAlignment="Left" Height="52" Margin="564,78,0,0" VerticalAlignment="Top" Width="189" Click="button4_Click"/>
 
+    </Grid>-->
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- First row with automatic height -->
+            <RowDefinition Height="*"/>
+            <!-- Second row that takes up remaining space -->
+        </Grid.RowDefinitions>
+
+        <!-- First row content -->
+        <StackPanel Grid.Row="0" Height="60" Margin="20,60,20,0">
+            <TextBlock Text="Address:"
+                       x:Name="address_block"
+                  FontSize="13"
+                  FontWeight="Medium"
+                  FontFamily="Montserrat"                            
+                  Foreground="Purple"
+                  Background="White"
+                  Height="30"
+                  Margin="0,5,0,0"
+                  Padding="30,0,0,0"/>
+        </StackPanel>
+
+        <!-- Second row content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Column="1" 
+                    x:Name="record_button"
+                    Content="RECORD" 
+                    HorizontalAlignment="Center" 
+                    Height="60" Margin="0,0,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="200" 
+                    Foreground="White"
+                            FontSize="12"
+                            FontFamily="Montserrat"
+                            Cursor="Hand" 
+                    Click="button1_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#462AD8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="150" Height="40"
+                                        CornerRadius="20"
+                                        Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+
+            <Popup Grid.Column="1"  x:Name="MyPopup" Placement="Bottom" PlacementTarget="{Binding ElementName=MyButton}" IsOpen="False" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <Border Background="Red" BorderBrush="White" BorderThickness="1">
+                    <TextBlock Text="Recording in progress" FontWeight="Bold" Padding="5"/>
+                </Border>
+            </Popup>
+            <Button Grid.Column="2" 
+                    x:Name="stop_button"
+                    Content="STOP" 
+                    HorizontalAlignment="Center" 
+                    Height="60" Margin="0,0,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="200" 
+                    Foreground="White"
+                            FontSize="12"
+                            FontFamily="Montserrat"
+                            Cursor="Hand" 
+                    Click="button2_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#462AD8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="150" Height="40"
+                                        CornerRadius="20"
+                                        Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <Button Grid.Column="0" 
+                    Content="SELECT FOLDER" 
+                    HorizontalAlignment="Center" 
+                    Height="60" Margin="0,0,0,0" 
+                    VerticalAlignment="Top" 
+                    Width="200"
+                    Foreground="White"
+                            FontSize="12"
+                            FontFamily="Montserrat"
+                            Cursor="Hand" 
+                    Click="button4_Click">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#462AD8"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#28AEED"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="150" Height="40"
+                                        CornerRadius="20"
+                                        Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center"
+                                                      HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+        </Grid>
     </Grid>
 </UserControl>
